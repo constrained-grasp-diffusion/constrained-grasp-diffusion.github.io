@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+        content="Constrained 6-DoF Grasp Generation on Complex Shapes for Improved Dual-Arm Manipulation">
+    <meta name="keywords" content="CGDF, SE(3)Dif, grasp-diffusion">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CGDF: Constrained Grasp Diffusion Fields</title>
+
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="icon" href="./static/images/favicon.svg">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+</head>
+
+<body>
+
+    <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=u8jCh6ASsaYQO-ecRVYjHfPLH_j28OlssYDHZDHcQOY&cl=ffffff&w=a"></script>
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-1 publication-title">Constrained 6-DoF Grasp Generation on Complex Shapes
+                            for Improved
+                            Dual-Arm Manipulation</h1>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">
+                                <a href="https://vanhalen42.github.io/" target="_blank">Gaurav
+                                    Singh</a><sup>1⭐</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://sanketkalwar.github.io/" target="_blank">Sanket
+                                    Kalwar</a><sup>1⭐</sup>,</span>
+                            <span class="author-block">
+                                <a href="https://researchweb.iiit.ac.in/~md.faizal/" target="_blank">Md Faizal
+                                    Karim</a><sup>1</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://bipashasen.github.io/" target="_blank">Bipasha Sen</a><sup>2</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://nagamanigi.wixsite.com/home" target="_blank">Nagamanikandan
+                                    Govindan</a><sup>1</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://cs.brown.edu/people/ssrinath/" target="_blank">Srinath
+                                    Sridhar</a><sup>3</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://scholar.google.com/citations?user=QDuPGHwAAAAJ" target="_blank">K
+                                    Madhava Krishna</a><sup>1</sup>
+                            </span>
+                        </div>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>IIIT Hyderabad, </span>
+                            <span class="author-block"><sup>2</sup>Massachusetts Institute of Technology, </span>
+                            <span class="author-block"><sup>3</sup>Brown University</span>
+                            <br>
+                            <span class="author-block"><sup>⭐</sup>Equal contribution</span>
+                            <br>
+
+
+                        </div>
+
+                        <!-- <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <span class="link-block">
+                                    <a href="#"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </span>
+                                        <span>Paper</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="#"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>arXiv</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="#"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fab fa-youtube"></i>
+                                        </span>
+                                        <span>Video</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="#" class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>Code (coming soon)</span>
+                                    </a>
+                                    <span class="link-block">
+                                        <a href="#"
+                                            class="external-link button is-normal is-rounded is-dark">
+                                            <span class="icon">
+                                                <i class="far fa-images"></i>
+                                            </span>
+                                            <span>Data</span>
+                                        </a>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="hero is-light p-5" style="background-color: rgb(252, 252, 252);">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered video-container">
+                <video id="matting-video" autoplay muted loop playsinline height="100%">
+                    <source src="./static/images/banner.mp4" type="video/mp4">
+                </video>
+            </div>
+
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered my-5">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        Efficiently generating grasp poses tailored to specific regions of an object is vital for
+                        various robotic manipulation tasks, especially in a dual-arm setup.
+                        This scenario presents a significant challenge due to the complex geometries involved, requiring
+                        a deep understanding of the local geometry
+                        to generate grasps efficiently on the specified constrained regions. Existing methods only
+                        explore settings involving tabletop/small objects and require augmented datasets to train,
+                        limiting their performance on complex objects. We propose
+                        <b>CGDF: Constrained Grasp Diffusion Fields</b>, a diffusion based
+                        grasp generative model that generalizes to objects with arbitrary geometries, as well as
+                        generates dense grasps on the target regions. CGDF uses a part-guided diffusion approach
+                        that enables it to get high sample efficiency in constrained grasping without explicitly
+                        training on massive constraint augmented datasets.We provide qualitative and quantitative
+                        comparisons using analytical metrics and in simulation, in both unconstrained and
+                        constrained
+                        settings to show that our method
+                        can generalize to generate stable grasps on complex objects,
+                        especially useful for dual-arm manipulation settings, while existing methods struggle to do
+                        so.
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+
+            <div class="columns has-text-centered">
+                <div class="column is-full-width">
+                    <h2 class="title is-3">Architecture</h2>
+                    <img src="./static/images/main_archv15-high-res.png">
+                    <div class="content has-text-justified my-4">
+                        <b>Architectural Overview</b>:The figure section <b>(a)</b> shows the architecture of our
+                        proposed energy-based model \(\mathbf{E_{\theta}} \).
+                        During this process, the model takes as input a point cloud and the grasp pose, which is
+                        subsequently converted into a set of query points.
+                        We use a VN-Pointnet-based point cloud encoder, which generates per-point features. <b>(b)</b>
+                        shows how these features are then distilled into
+                        three 2D feature planes oriented along the \(XY\), \(XZ\), and \(YZ\) planes using a
+                        convolutional
+                        multi-plane encoder. For each grasp pose, feature
+                        vectors corresponding to \(N\) query points are obtained using bilinear interpolation on the
+                        feature planes. Subsequently, the grasp feature
+                        vector is derived from \(\mathbf{F_{\theta}} \) and decoded into an energy value by
+                        \(\mathbf{D_{\theta}} \) . In figure section
+                        <b>(c)</b>, we show the grasp diffusion process, where
+                        grasps are diffused over the object during the forward diffusion process and denoised
+                        using the backward diffusion process.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+
+            <div class="columns is-centered has-text-centered my-5">
+                <div class="column">
+                    <h2 class="title is-3">Part Guided Diffusion</h2>
+                    <img src="./static/images/part_guidedv4.png" style="width: 60%">
+                    <div class="content has-text-justified">
+                        <b>Part-guided diffusion</b> works by utilizing the energy values \(e^{'} \) and \(e^{''} \)
+                        predicted by the trained
+                        EBM \(\mathbf{E_{\theta}} \) on \(P \) (pointcloud of the full object) and \(P_{t} \)
+                        (target region pointcloud). \(e^{'} \) is calculated as \(\mathbf{E_{\theta}(H_{k}, 0, P)} \)
+                        and \(e^{''} \) as \(\mathbf{E_{\theta}(H_{k}, 0, P_{t})} \) where \(H_{k} \) is the grasp pose with noise scale \(k\).
+                        By taking the maximum
+                        value of the energies, this strategy guides the grasp from a
+                        random pose to a stable configuration near the target region.
+                        During the inverse diffusion step, if the grasp \(H_{k} \) is near
+                        the constrained region but collides with the full object or
+                        is unstable, the energy \(e_{k}^{'} \) is higher, which makes \(H_{k} \) move
+                        to a more stable pose. Conversely, if the grasp is stable but
+                        is far from the constrained region, then \(e_{k}^{'} \) is higher, and
+                        the grasp moves closer to the constrained region. Eventually,
+                        the grasp moves to a pose where the energies for both \(P \)
+                        and \(P_{t} \) are low, i.e. the grasp is on the constrained region
+                        as well as stable.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section class="section">
+        <div class="container">
+            <h2 class="title is-3 has-text-centered">Additional Results</h2>
+            <h3 class="title is-4">Ours (Constrained)</h3>
+            <div class="columns ">
+                <div class="column">
+                    <model-viewer id="demo1" src="./static/constrained/ours_plane.glb" shadow-intensity="1"
+                        camera-controls touch-action="pan-y" camera-orbit="45deg 45deg 120m" ar
+                        ar-modes="webxr scene-viewer quick-look" ar-status="not-presenting"
+                        style="width:200px; height: 200px;"></model-viewer>
+                </div>
+                <div class="column">
+                    <model-viewer src="./static/constrained/ours_chair.glb" shadow-intensity="1" camera-controls
+                        touch-action="pan-y" camera-orbit="0deg 90deg 40m" ar ar-modes="webxr scene-viewer quick-look"
+                        ar-status="not-presenting" style="width:200px; height: 200px;"></model-viewer>
+                </div>
+                <div class="column">
+                    <model-viewer src="./static/constrained/ours_chair2.glb" shadow-intensity="1" camera-controls
+                        touch-action="pan-y" camera-orbit="0deg 90deg 40m" ar ar-modes="webxr scene-viewer quick-look"
+                        ar-status="not-presenting" style="width:200px; height: 200px;"></model-viewer>
+                </div>
+                <div class="column">
+                    <model-viewer src="./static/constrained/ours_chair2.glb" shadow-intensity="1" camera-controls
+                        touch-action="pan-y" camera-orbit="0deg 90deg 40m" ar ar-modes="webxr scene-viewer quick-look"
+                        ar-status="not-presenting" style="width:300px; height: 300px;"></model-viewer>
+                </div>
+            </div> -->
+
+            <!-- <h3 class="title is-4">VCGS (Constrained)</h3>
+
+            <div class="columns">
+                <div class="column">
+                    <model-viewer id="demo1" src="./static/constrained/ours_plane.glb" shadow-intensity="1"
+                        camera-controls touch-action="pan-y" camera-orbit="45deg 45deg 120m" ar
+                        ar-modes="webxr scene-viewer quick-look" ar-status="not-presenting"
+                        style="width:200px; height: 200px;"></model-viewer>
+                </div>
+                <div class="column">
+                    <model-viewer src="./static/constrained/ours_chair.glb" shadow-intensity="1" camera-controls
+                        touch-action="pan-y" camera-orbit="0deg 90deg 40m" ar ar-modes="webxr scene-viewer quick-look"
+                        ar-status="not-presenting" style="width:200px; height: 200px;"></model-viewer>
+                </div>
+                <div class="column">
+                    <model-viewer src="./static/constrained/ours_chair2.glb" shadow-intensity="1" camera-controls
+                        touch-action="pan-y" camera-orbit="0deg 90deg 60m" ar ar-modes="webxr scene-viewer quick-look"
+                        ar-status="not-presenting" style="width:200px; height: 200px;"></model-viewer>
+                </div>
+
+                <div class="column">
+                    <model-viewer src="./static/constrained/ours_chair2.glb" shadow-intensity="1" camera-controls
+                        touch-action="pan-y" camera-orbit="0deg 90deg 60m" ar ar-modes="webxr scene-viewer quick-look"
+                        ar-status="not-presenting" style="width:200px; height: 200px;"></model-viewer>
+                </div>
+            </div> -->
+
+            <!-- <hr>
+
+            <h3 class="title is-4">Ours (Unconstrained)</h3>
+            <div class="columns">
+                <div class="column">
+                    <model-viewer id="demo1" src="./static/unconstrained/ours_chair1.glb" shadow-intensity="1"
+                        camera-controls touch-action="pan-y" camera-orbit="45deg 45deg 120m" ar
+                        ar-modes="webxr scene-viewer quick-look" ar-status="not-presenting"
+                        style="width:200px; height: 200px;"></model-viewer>
+                </div>
+
+                <div class="column">
+                    <model-viewer id="demo1" src="./static/unconstrained/ours_table.glb" shadow-intensity="1"
+                        camera-controls touch-action="pan-y" camera-orbit="45deg 45deg 120m" ar
+                        ar-modes="webxr scene-viewer quick-look" ar-status="not-presenting"
+                        style="width:200px; height: 200px;"></model-viewer>
+                </div>
+
+                <div class="column">
+                    <model-viewer id="demo1" src="./static/unconstrained/ours_table2.glb" shadow-intensity="1"
+                        camera-controls touch-action="pan-y" camera-orbit="45deg 45deg 120m" ar
+                        ar-modes="webxr scene-viewer quick-look" ar-status="not-presenting"
+                        style="width:200px; height: 200px;"></model-viewer>
+                </div>
+
+                <div class="column">
+                    <model-viewer id="demo1" src="./static/unconstrained/ours_table.glb" shadow-intensity="1"
+                        camera-controls touch-action="pan-y" camera-orbit="45deg 45deg 120m" ar
+                        ar-modes="webxr scene-viewer quick-look" ar-status="not-presenting"
+                        style="width:300px; height: 300px;"></model-viewer>
+                </div>
+            </div> -->
+
+
+        <!-- </div> -->
+
+    </section>
+
+
+    <section class="section" id="BibTeX" style="margin-bottom: 3rem;">
+        <div class="container is-max-desktop content">
+            <h2 class="title">BibTeX</h2>
+            <pre><code>@misc{cgdf2024,
+    title={Constrained 6-DoF Grasp Generation on Complex Shapes for Improved Dual-Arm Manipulation}
+    author={Gaurav Singh and Sanket Kalwar and Md Faizal Karim and Bipasha Sen and Nagamanikandan Govindan and Srinath Sridhar and K Madhava Krishna},
+    year={2024},
+    journal={}
+    <!-- eprint={},
+    archivePrefix={},
+    primaryClass={} -->
+}</code></pre>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p>
+                            This website is licensed under a <a rel="license"
+                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                                Commons Attribution-ShareAlike 4.0 International License</a>. It is borrowing this <a
+                                href="https://github.com/nerfies/nerfies.github.io">source code</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
